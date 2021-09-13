@@ -17,13 +17,17 @@
             <img src="https://pbs.twimg.com/profile_images/493847405670850561/qslkfHlq_400x400.jpeg" width="100"
                 height="100" />
             <h1 class="display-4">RPC : Red de programacion competitiva</h1>
+            {{ $length := len .message }}
+            {{ if ne $length 1 }}
+                <div class="alert alert-warning mt-3">{{ .message }}</div>
+            {{ end }}
 
             <!--<div class="alert alert-warning">No pueden haber campos vacios</div>
             <div class="alert alert-info">El usuario o contraseña son incorrectos</div>-->
 
         </div>
         
-        <form action="/login" method="POST">
+        <form action="/users" method="POST">
             <div class="containerSingIn">
                 <div class="form-group">
                     <label class="control-label">Username</label>

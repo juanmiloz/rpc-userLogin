@@ -24,37 +24,44 @@ var users = []user{
 
 func main() {
 	router := gin.Default()
-	router.LoadHTMLFiles("login.html", "create.html")
+	router.LoadHTMLFiles("login.html", "create.html", "users.html")
 	router.GET("/", defaultRedirect)
-	router.GET("/login", loadViewLogin)
-	router.POST("/login", login)
+	router.GET("/users", loadViewLogin)
+	router.POST("/users", login)
 	router.GET("/create", loadViewCreate)
 	router.POST("/create", addUser)
-	//router.POST("/users", login)
-	//router.GET("/create", addUser)
+	router.GET("/list", loadViewList)
 
 	router.Run("localhost:8080")
 }
 
 func defaultRedirect(c *gin.Context) {
-	c.Redirect(http.StatusMovedPermanently, "/login")
+	c.Redirect(http.StatusMovedPermanently, "/users")
+}
+
+func loadViewList(c *gin.Context) {
+	c.HTML(http.StatusOK, "users.html", nil)
+
 }
 
 func loadViewCreate(c *gin.Context) {
 	c.HTML(http.StatusOK, "create.html", nil)
 
 }
+
 func loadViewLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", nil)
-	/*if len(userLogged) != 0 {
+
+	if len(userLogged) != 0 {
 		c.HTML(http.StatusOK, "users.html", gin.H{
 			"user":  userLogged,
 			"users": users,
 		})
 		return
 	} else {
-		c.HTML(http.StatusOK, "login.html", nil)
-	}*/
+		c.HTML(http.StatusOK, "login.html", gin.H{
+			"message": " ",
+		})
+	}
 }
 func addUser(c *gin.Context) {
 	username := c.PostForm("username")
@@ -80,7 +87,7 @@ func addUser(c *gin.Context) {
 }
 
 func login(c *gin.Context) {
-	/*username := c.PostForm("Username")
+	username := c.PostForm("Username")
 	password := c.PostForm("Password")
 
 	for _, a := range users {
@@ -104,5 +111,5 @@ func login(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"message": "This user doesn't exist",
 	})
-	*/
+
 }
