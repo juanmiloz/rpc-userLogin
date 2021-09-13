@@ -26,7 +26,9 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLFiles("login.html", "create.html")
 	router.GET("/", defaultRedirect)
-	router.GET("/users", loadViewLogin)
+	router.GET("/login", loadViewLogin)
+	router.POST("/login", login)
+	router.GET("/create", loadViewCreate)
 	router.POST("/create", addUser)
 	//router.POST("/users", login)
 	//router.GET("/create", addUser)
@@ -35,9 +37,13 @@ func main() {
 }
 
 func defaultRedirect(c *gin.Context) {
-	c.Redirect(http.StatusMovedPermanently, "/users")
+	c.Redirect(http.StatusMovedPermanently, "/login")
 }
 
+func loadViewCreate(c *gin.Context) {
+	c.HTML(http.StatusOK, "create.html", nil)
+
+}
 func loadViewLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 	/*if len(userLogged) != 0 {
