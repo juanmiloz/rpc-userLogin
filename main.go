@@ -2,25 +2,24 @@ package main
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 type user struct {
-	Username        string    `json:"username"`
-	Password        string    `json:"password"`
-	ConfirmPassword string    `json:"confirmPassword"`
-	FirstName       string    `json:"firstName"`
-	LastName        string    `json:"lastName"`
-	Birthdate       time.Time `json:"time"`
+	Username        string `json:"username"`
+	Password        string `json:"password"`
+	ConfirmPassword string `json:"confirmPassword"`
+	FirstName       string `json:"firstName"`
+	LastName        string `json:"lastName"`
+	Birthdate       string `json:"birthdate"`
 }
 
 var userLogged = []user{}
 
 var users = []user{
-	{Username: "juanmiloz", Password: "juancamilo", ConfirmPassword: "juancamilo", FirstName: "Juan", LastName: "Zorrilla", Birthdate: time.Now()},
-	{Username: "jpSanin", Password: "sanincho", ConfirmPassword: "sanincho", FirstName: "Juan", LastName: "Sanin", Birthdate: time.Now()},
+	{Username: "juanmiloz", Password: "juancamilo", ConfirmPassword: "juancamilo", FirstName: "Juan", LastName: "Zorrilla", Birthdate: "13/03/2002"},
+	{Username: "jpSanin", Password: "sanincho", ConfirmPassword: "sanincho", FirstName: "Juan", LastName: "Sanin", Birthdate: "16/05/2001"},
 }
 
 func main() {
@@ -57,13 +56,13 @@ func addUser(c *gin.Context) {
 	lastname := c.PostForm("lastname")
 	birthdate := c.PostForm("birthdate")
 
-	newUser := user{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastname, Birthdate: birthdate}
-
-	append(users, newUser)
-
-	/*if username != nil && password != nil && confirmPassword != nil && firstname != nil && lastname != nil && birthdate != nil{
+	if len(username) > 0 && len(password) > 0 && len(confirmPassword) > 0 && len(firstname) > 0 && len(lastname) > 0 && len(birthdate) > 0{
 		if password == confirmPassword{
-
+			newUser := user{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastname, Birthdate: birthdate}
+			users = append(users, newUser)
+			c.HTML(http.StatusOK , "create.html", gin.H{
+				"answer": "your user was create successfully",
+			})
 		}else{
 
 		}
