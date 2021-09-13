@@ -37,20 +37,17 @@
             </tr>
         </thead>
         <tbody>
-            
+            {{range $user:= .users}}
             <tr>
                 <td>
-                    
+                    {{.Username}}
                 </td>
-                
+                    {{.Firstname}}   
                 <td>
-                    
-                </td>
-                <td>
-                    
+                    {{.Lastname}}
                 </td>
                 <td>
-                    
+                    {{.Date}}
                 </td>
             </tr>
         </tbody>
