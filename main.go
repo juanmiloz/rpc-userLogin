@@ -28,7 +28,8 @@ func main() {
 	router.GET("/", defaultRedirect)
 	router.GET("/users", loadViewLogin)
 	router.POST("/users", login)
-	//router.GET("/create", addUser)
+	router.POST("/create", addUser)
+	router.GET("/create", loadCreateView)
 
 	router.Run("localhost:8080")
 }
@@ -48,8 +49,9 @@ func loadViewLogin(c *gin.Context) {
 		c.HTML(http.StatusOK, "login.html", nil)
 	}
 }
+
 func addUser(c *gin.Context) {
-	/*username := c.PostForm("username")
+	username := c.PostForm("username")
 	password := c.PostForm("password")
 	confirmPassword := c.PostForm("confirmPassword")
 	firstname := c.PostForm("firstname")
@@ -68,7 +70,11 @@ func addUser(c *gin.Context) {
 		}
 	}else{
 
-	}*/
+	}
+}
+
+func loadCreateView(c *gin.Context){
+	c.HTML(http.StatusOK, "create.html", nil)
 }
 
 func login(c *gin.Context) {
