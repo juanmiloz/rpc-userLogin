@@ -19,7 +19,7 @@ var userLogged = []user{}
 
 var users = []user{
 	{Username: "juanmiloz", Password: "juancamilo", ConfirmPassword: "juancamilo", FirstName: "Juan", LastName: "Zorrilla", Birthdate: "13/03/2002"},
-	{Username: "jpSanin", Password: "sanincho", ConfirmPassword: "sanincho", FirstName: "Juan", LastName: "Sanin", Birthdate: "16/05/2001"},
+	{Username: "jpSanin", Password: "sanincho", ConfirmPassword: "sanincho", FirstName: "Juan Pablo", LastName: "Sanin", Birthdate: "16/05/2001"},
 }
 
 func main() {
@@ -31,7 +31,7 @@ func main() {
 	router.GET("/create", loadViewCreate)
 	router.POST("/create", addUser)
 	router.GET("/list", loadViewList)
-
+	router.GET("/logout", logout)
 	router.Run("localhost:8080")
 }
 
@@ -40,8 +40,9 @@ func defaultRedirect(c *gin.Context) {
 }
 
 func loadViewList(c *gin.Context) {
-	c.HTML(http.StatusOK, "users.html", nil)
-
+	c.HTML(http.StatusOK, "users.html", gin.H{
+		"users": users,
+	})
 }
 
 func loadViewCreate(c *gin.Context) {
@@ -112,4 +113,9 @@ func login(c *gin.Context) {
 		"message": "This user doesn't exist",
 	})
 
+}
+
+func logout(c *gin.Context) {
+	userLogged = []user{}
+	c.Redirect(http.StatusMovedPermanently, "/users")
 }
