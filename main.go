@@ -24,12 +24,12 @@ var users = []user{
 
 func main() {
 	router := gin.Default()
-	router.LoadHTMLFiles("login.html", "create.html", "users.html")
+	router.LoadHTMLFiles("login.html", "create.html")
 	router.GET("/", defaultRedirect)
 	router.GET("/users", loadViewLogin)
-	router.POST("/users", login)
 	router.POST("/create", addUser)
-	router.GET("/create", loadCreateView)
+	//router.POST("/users", login)
+	//router.GET("/create", addUser)
 
 	router.Run("localhost:8080")
 }
@@ -39,7 +39,8 @@ func defaultRedirect(c *gin.Context) {
 }
 
 func loadViewLogin(c *gin.Context) {
-	if len(userLogged) != 0 {
+	c.HTML(http.StatusOK, "login.html", nil)
+	/*if len(userLogged) != 0 {
 		c.HTML(http.StatusOK, "users.html", gin.H{
 			"user":  userLogged,
 			"users": users,
@@ -47,7 +48,7 @@ func loadViewLogin(c *gin.Context) {
 		return
 	} else {
 		c.HTML(http.StatusOK, "login.html", nil)
-	}
+	}*/
 }
 
 func addUser(c *gin.Context) {
@@ -58,17 +59,17 @@ func addUser(c *gin.Context) {
 	lastname := c.PostForm("lastname")
 	birthdate := c.PostForm("birthdate")
 
-	if len(username) > 0 && len(password) > 0 && len(confirmPassword) > 0 && len(firstname) > 0 && len(lastname) > 0 && len(birthdate) > 0{
-		if password == confirmPassword{
+	if len(username) > 0 && len(password) > 0 && len(confirmPassword) > 0 && len(firstname) > 0 && len(lastname) > 0 && len(birthdate) > 0 {
+		if password == confirmPassword {
 			newUser := user{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastname, Birthdate: birthdate}
 			users = append(users, newUser)
-			c.HTML(http.StatusOK , "create.html", gin.H{
+			c.HTML(http.StatusOK, "create.html", gin.H{
 				"answer": "your user was create successfully",
 			})
-		}else{
+		} else {
 
 		}
-	}else{
+	} else {
 
 	}
 }
@@ -78,7 +79,7 @@ func loadCreateView(c *gin.Context){
 }
 
 func login(c *gin.Context) {
-	username := c.PostForm("Username")
+	/*username := c.PostForm("Username")
 	password := c.PostForm("Password")
 
 	for _, a := range users {
@@ -102,5 +103,5 @@ func login(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"message": "This user doesn't exist",
 	})
-
+	*/
 }
