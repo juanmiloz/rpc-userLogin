@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type User struct {
+type user struct {
 	Username        string    `json:"username"`
 	Password        string    `json:"password"`
 	ConfirmPassword string    `json:"confirmPassword"`
@@ -15,7 +15,7 @@ type User struct {
 	Birthdate       time.Time `json:"time"`
 }
 
-var users = []User{
+var users = []user{
 	{Username: "juanmiloz", Password: "juancamilo", ConfirmPassword: "juancamilo", FirstName: "Juan", LastName: "Zorrilla", Birthdate: time.Now()},
 	{Username: "jpSanin", Password: "sanincho", ConfirmPassword: "sanincho", FirstName: "Juan", LastName: "Sanin", Birthdate: time.Now()},
 }
@@ -35,8 +35,17 @@ func addUser(c *gin.Context) {
 	lastname := c.PostForm("lastname")
 	birthdate := c.PostForm("birthdate")
 
-	newUser := []User{
-		{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastName, Birthdate: birthdate},
-	}
-	users = append(users, newUser)
+	newUser := user{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastname, Birthdate: birthdate}
+
+	append(users, newUser)
+
+	/*if username != nil && password != nil && confirmPassword != nil && firstname != nil && lastname != nil && birthdate != nil{
+		if password == confirmPassword{
+
+		}else{
+
+		}
+	}else{
+
+	}*/
 }
