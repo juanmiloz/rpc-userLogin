@@ -14,7 +14,10 @@
         <h4>Fill information</h4>
         <hr />
         <div class="row">
-          
+            {{ $length := len .answer }}
+            {{ if ne $length 1 }}
+                    <div class="alert alert-warning mt-3">{{ .answer }}</div>
+            {{ end }}
             <div action= "/create" class="col-md-4">
                 <form method="post">
                     <div class="text-danger"></div>
@@ -58,7 +61,7 @@
         </div>
 
         <div>
-            <a href="/users">Cancel</a>
+            <a href="/users">Back</a>
         </div>
     </div>
 </body>

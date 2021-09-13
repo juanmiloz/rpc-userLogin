@@ -45,8 +45,9 @@ func loadViewList(c *gin.Context) {
 }
 
 func loadViewCreate(c *gin.Context) {
-	c.HTML(http.StatusOK, "create.html", nil)
-
+	c.HTML(http.StatusOK, "create.html", gin.H{
+		"answer":" ",
+	})
 }
 
 func loadViewLogin(c *gin.Context) {
@@ -76,19 +77,19 @@ func addUser(c *gin.Context) {
 		if password == confirmPassword {
 			newUser := user{Username: username, Password: password, ConfirmPassword: confirmPassword, FirstName: firstname, LastName: lastname, Birthdate: birthdate}
 			users = append(users, newUser)
-			c.HTML(http.StatusOK, "create.html", gin.H{
-				"answer": "your user was create successfully",
+			c.HTML(http.StatusOK, "login.html", gin.H{
+				"message": "your user was create successfully",
 			})
 		} else {
-
+			c.HTML(http.StatusOK, "create.html", gin.H{
+				"answer": "The passwords are not equals",
+			})
 		}
 	} else {
-
+		c.HTML(http.StatusOK, "create.html", gin.H{
+			"answer": "There can be no empty fields",
+		})
 	}
-}
-
-func loadCreateView(c *gin.Context){
-	c.HTML(http.StatusOK, "create.html", nil)
 }
 
 func login(c *gin.Context) {
